@@ -1,11 +1,11 @@
-extern crate gl;
-
 use glutin::{
     event::{Event, WindowEvent},
     event_loop::{ControlFlow, EventLoop},
     window::WindowBuilder,
     ContextBuilder, GlProfile, GlRequest,
 };
+
+use gl;
 
 use std::ffi::CStr;
 
