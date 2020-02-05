@@ -9,3 +9,4 @@ edition = "2018"
 [dependencies]
 winit = "0.20.0"
 glutin = "0.22.1"
+gl = "0.14.0"
