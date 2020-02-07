@@ -1,3 +1,6 @@
+pub mod graphics;
+pub mod utils;
+
 use glutin::{
     event::{Event, WindowEvent},
     event_loop::{ControlFlow, EventLoop},
@@ -5,9 +8,9 @@ use glutin::{
     ContextBuilder, GlProfile, GlRequest,
 };
 
-use gl;
+use std::ffi::{CStr, CString};
 
-use std::ffi::CStr;
+use graphics::gl::shader::{Program, Shader};
 
 fn main() {
     let el = EventLoop::new();
@@ -41,8 +44,16 @@ fn main() {
         gl::ClearColor(0.3, 0.3, 0.5, 1.0);
     }
 
+    let vertex_shader =
+        Shader::from_vert_source(&CString::new(include_str!("triangle.vert")).unwrap()).unwrap();
+
+    let fragment_shader =
+        Shader::from_frag_source(&CString::new(include_str!("triangle.frag")).unwrap()).unwrap();
+
+    let program = Program::from_shaders(&[vertex_shader, fragment_shader]);
+
     el.run(move |event, _, control_flow| {
-        println!("{:?}", event);
+        // println!("{:?}", event);
         *control_flow = ControlFlow::Wait;
 
         match event {
