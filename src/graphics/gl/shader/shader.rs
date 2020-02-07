@@ -50,7 +50,7 @@ impl Shader {
                 gl::GetShaderiv(id, gl::INFO_LOG_LENGTH, &mut log_length);
             }
             let log_length = log_length as usize;
-            let error = utils::create_whitespace_cstring(log_length);
+            let error = utils::string::create_whitespace_cstring(log_length);
             unsafe {
                 gl::GetShaderInfoLog(
                     id,

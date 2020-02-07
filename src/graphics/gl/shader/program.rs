@@ -56,7 +56,7 @@ impl Program {
             unsafe {
                 gl::GetProgramiv(id, gl::INFO_LOG_LENGTH, &mut log_length);
             }
-            let error = utils::create_whitespace_cstring(log_length as usize);
+            let error = utils::string::create_whitespace_cstring(log_length as usize);
             unsafe {
                 gl::GetProgramInfoLog(
                     id,
