@@ -1,5 +1,6 @@
-use crate::utils;
+use crate::utils::string as string_utils;
 use gl::types::*;
+use log;
 use std::{ffi::CStr, ptr};
 
 #[derive(Debug)]
@@ -9,8 +10,8 @@ pub struct Shader {
 
 impl Shader {
     pub fn from_source(source: &CStr, r#type: GLenum) -> Result<Shader, String> {
-        println!("Creating shader of type {}.", r#type);
-        println!("Shader source: {:?}", source);
+        log::debug!("Creating shader of type {}.", r#type);
+        log::trace!("Shader source: {:?}", source);
 
         let id = unsafe { gl::CreateShader(r#type) };
         unsafe {
@@ -20,10 +21,10 @@ impl Shader {
 
         match Shader::check_errors(id) {
             Ok(_) => {
-                println!("Shader {} compiled successfully.", id);
+                log::info!("Shader {} compiled successfully.", id);
             }
             Err(error) => {
-                println!("Shader {} failed to compile.", id);
+                log::error!("Shader {} failed to compile.", id);
                 return Err(error);
             }
         };
@@ -50,7 +51,7 @@ impl Shader {
                 gl::GetShaderiv(id, gl::INFO_LOG_LENGTH, &mut log_length);
             }
             let log_length = log_length as usize;
-            let error = utils::string::create_whitespace_cstring(log_length);
+            let error = string_utils::create_whitespace_cstring(log_length);
             unsafe {
                 gl::GetShaderInfoLog(
                     id,
@@ -72,7 +73,7 @@ impl Shader {
 impl Drop for Shader {
     fn drop(&mut self) {
         unsafe {
-            println!("Deleting shader {}", self.id);
+            log::debug!("Deleting shader {}", self.id);
             gl::DeleteShader(self.id);
         }
     }

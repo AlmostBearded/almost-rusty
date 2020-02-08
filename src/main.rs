@@ -12,7 +12,13 @@ use std::ffi::{CStr, CString};
 
 use graphics::gl::shader::{Program, Shader};
 
+use log::Level;
+use utils::log::Logger;
+
 fn main() {
+    Logger::activate();
+    Logger::set_max_level(Level::Debug);
+
     let el = EventLoop::new();
     let wb = WindowBuilder::new().with_title("A fantastic window!");
 
@@ -24,7 +30,7 @@ fn main() {
     let windowed_context = unsafe { windowed_context.make_current().unwrap() };
     let gl_context = windowed_context.context();
 
-    println!(
+    log::info!(
         "Pixel format of the window's GL context: {:?}",
         windowed_context.get_pixel_format()
     );
@@ -38,7 +44,7 @@ fn main() {
         )
         .unwrap()
     };
-    println!("OpenGL version: {}", version);
+    log::info!("OpenGL version: {}", version);
 
     unsafe {
         gl::ClearColor(0.3, 0.3, 0.5, 1.0);
@@ -50,10 +56,11 @@ fn main() {
     let fragment_shader =
         Shader::from_frag_source(&CString::new(include_str!("triangle.frag")).unwrap()).unwrap();
 
-    let program = Program::from_shaders(&[vertex_shader, fragment_shader]);
+    let program = Program::from_shaders(&[vertex_shader, fragment_shader]).unwrap();
+    program.activate();
 
     el.run(move |event, _, control_flow| {
-        // println!("{:?}", event);
+        log::trace!("{:?}", event);
         *control_flow = ControlFlow::Wait;
 
         match event {

@@ -4,6 +4,7 @@ use gl::types::*;
 use std::ptr;
 
 use super::Shader;
+use log;
 
 #[derive(Debug)]
 pub struct Program {
@@ -12,7 +13,7 @@ pub struct Program {
 
 impl Program {
     pub fn from_shaders(shaders: &[Shader]) -> Result<Program, String> {
-        println!("Creating shader program from shaders {:?}", shaders);
+        log::debug!("Creating shader program from shaders {:?}", shaders);
 
         let id = unsafe { gl::CreateProgram() };
 
@@ -28,10 +29,10 @@ impl Program {
 
         match Program::check_errors(id) {
             Ok(_) => {
-                println!("Shader program {} linked sucessfully", id);
+                log::info!("Shader program {} linked sucessfully", id);
             }
             Err(error) => {
-                println!("Shader program {} failed to link", id);
+                log::error!("Shader program {} failed to link", id);
                 return Err(error);
             }
         }
@@ -74,8 +75,8 @@ impl Program {
         self.id
     }
 
-    pub fn r#use(&self) {
-        println!("Use shader program {}", self.id);
+    pub fn activate(&self) {
+        log::debug!("Activate shader program {}", self.id);
         unsafe {
             gl::UseProgram(self.id);
         }
@@ -84,7 +85,7 @@ impl Program {
 
 impl Drop for Program {
     fn drop(&mut self) {
-        println!("Deleting shader program {}", self.id);
+        log::debug!("Deleting shader program {}", self.id);
         unsafe {
             gl::DeleteProgram(self.id);
         }
