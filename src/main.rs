@@ -16,8 +16,8 @@ use log::Level;
 use utils::log::Logger;
 
 fn main() {
-    Logger::activate();
-    Logger::set_max_level(Level::Debug);
+    Logger::init_with_level(Level::Debug);
+    log::info!("Game started");
 
     let el = EventLoop::new();
     let wb = WindowBuilder::new().with_title("A fantastic window!");
