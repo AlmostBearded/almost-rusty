@@ -1,5 +1,6 @@
 pub mod graphics;
 pub mod utils;
+pub mod assets;
 
 use glutin::{
     event::{Event, WindowEvent},
@@ -18,6 +19,8 @@ use utils::log::Logger;
 fn main() {
     Logger::init_with_level(Level::Debug);
     log::info!("Game started");
+
+    log::info!("{}", assets::config::WINDOW_CONF);
 
     let el = EventLoop::new();
     let wb = WindowBuilder::new().with_title("A fantastic window!");
