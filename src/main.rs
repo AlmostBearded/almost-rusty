@@ -12,6 +12,7 @@ use glutin::{
 use std::ffi::{CStr, CString};
 
 use graphics::gl::shader::{Program, Shader};
+use assets::database;
 
 use log::Level;
 use utils::log::Logger;
@@ -20,7 +21,7 @@ fn main() {
     Logger::init_with_level(Level::Debug);
     log::info!("Game started");
 
-    let window_config = assets::config::Window::load();
+    let window_config = database::config::Window::load();
 
     let el = EventLoop::new();
     let wb = WindowBuilder::new().with_title(window_config.into_owned().title);
@@ -45,7 +46,7 @@ fn main() {
                 .to_bytes()
                 .to_vec(),
         )
-        .unwrap()
+            .unwrap()
     };
     log::info!("OpenGL version: {}", version);
 

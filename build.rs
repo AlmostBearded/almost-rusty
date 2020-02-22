@@ -28,7 +28,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     }
 
     // clear modules
-    fs::remove_dir_all(Path::new("src/assets"))?;
+    fs::remove_dir_all(Path::new("src/assets/database")).ok();
 
     // create modules
     let dirs = paths.iter().filter(|&p| p.is_dir());
@@ -59,15 +59,14 @@ fn main() -> Result<(), Box<dyn Error>> {
                     // need to provide '/' path strings because of a bug in the config_struct package
                     config_struct::create_config(
                         &path,
-                        Path::new("src")
-                            .join(dir)
+                        Path::new("src/assets/database")
+                            .join(dir.strip_prefix("assets").unwrap())
                             .join(Path::new(&[file_stem, ".rs"].concat())),
-                        &StructOptions::serde_default(),
-                    )
-                    .expect(&format!(
-                        "Failed to create config from {}",
-                        path.to_str().unwrap()
-                    ));
+                        &StructOptions::serde_default())
+                        .expect(&format!(
+                            "Failed to create config from {}",
+                            path.to_str().unwrap()
+                        ));
                     modrs_source = format!(
                         "{}mod {};\npub use {}::Config as {};\n",
                         modrs_source,
@@ -82,7 +81,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         }
 
         // create module folder
-        let dir = Path::new("src").join(&dir);
+        let dir = Path::new("src/assets/database").join(dir.strip_prefix("assets").unwrap());
         fs::create_dir_all(&dir)?;
 
         // create module file
