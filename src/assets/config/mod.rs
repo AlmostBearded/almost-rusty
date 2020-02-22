@@ -1,1 +1,2 @@
-pub static WINDOW_CONF : u8 = 0;
+mod window;
+pub use window::Config as Window;

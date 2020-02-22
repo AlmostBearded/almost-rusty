@@ -1,3 +1,4 @@
+use config_struct::StructOptions;
 use std::{
     error::Error,
     fs,
@@ -5,6 +6,7 @@ use std::{
     vec::Vec,
 };
 
+use voca_rs::*;
 use walkdir::WalkDir;
 
 fn main() -> Result<(), Box<dyn Error>> {
@@ -43,7 +45,39 @@ fn main() -> Result<(), Box<dyn Error>> {
             } else {
                 // declare asset
                 let file_name = file_name.replace(".", "_").to_uppercase();
-                modrs_source = format!("{}pub static {} : u8 = 0;\n", modrs_source, file_name);
+                let file_stem = path.file_stem().unwrap().to_str().unwrap();
+                let file_extension = path
+                    .extension()
+                    .expect(&format!(
+                        "File extension can't be extracted from {}",
+                        path.to_str().unwrap()
+                    ))
+                    .to_str()
+                    .unwrap();
+
+                if file_extension.to_lowercase() == "toml" {
+                    // need to provide '/' path strings because of a bug in the config_struct package
+                    config_struct::create_config(
+                        &path,
+                        Path::new("src")
+                            .join(dir)
+                            .join(Path::new(&[file_stem, ".rs"].concat())),
+                        &StructOptions::serde_default(),
+                    )
+                    .expect(&format!(
+                        "Failed to create config from {}",
+                        path.to_str().unwrap()
+                    ));
+                    modrs_source = format!(
+                        "{}mod {};\npub use {}::Config as {};\n",
+                        modrs_source,
+                        file_stem,
+                        file_stem,
+                        case::pascal_case(file_stem)
+                    );
+                } else {
+                    modrs_source = format!("{}pub static {} : u8 = 0;\n", modrs_source, file_name);
+                }
             }
         }
 
