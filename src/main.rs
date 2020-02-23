@@ -55,10 +55,9 @@ fn main() {
     }
 
     let vertex_shader =
-        Shader::from_vert_source(&CString::new(include_str!("triangle.vert")).unwrap()).unwrap();
+        Shader::from_vert_source(&CString::new(include_str!("../assets/shaders/triangle.vert")).unwrap()).unwrap();
 
-    let fragment_shader =
-        Shader::from_frag_source(&CString::new(include_str!("triangle.frag")).unwrap()).unwrap();
+    let fragment_shader = assets::database::shaders::TRIANGLE_FRAG.load().unwrap();
 
     let program = Program::from_shaders(&[vertex_shader, fragment_shader]).unwrap();
     program.activate();
