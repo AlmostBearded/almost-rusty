@@ -1,14 +1,15 @@
-use config_struct::StructOptions;
 use std::{
     error::Error,
     fs,
     path::{Path, PathBuf},
     vec::Vec,
 };
+
+use config_struct::StructOptions;
 use voca_rs::*;
 use walkdir::WalkDir;
 
-pub fn generate_database() -> Result<(), Box<dyn Error>> {
+pub fn generate_database(src_root: &Path, dest_root: &Path) -> Result<(), Box<dyn Error>> {
     let mut paths = Vec::<PathBuf>::new();
 
     // find all asset file paths
@@ -44,7 +45,6 @@ pub fn generate_database() -> Result<(), Box<dyn Error>> {
             } else {
                 // declare asset
                 let file_name = file_name.replace(".", "_").to_uppercase();
-                let file_stem = path.file_stem().unwrap().to_str().unwrap();
                 let file_extension = path
                     .extension()
                     .expect(&format!(
@@ -58,30 +58,17 @@ pub fn generate_database() -> Result<(), Box<dyn Error>> {
                 match file_extension.as_str() {
                     "meta" => continue,
                     "toml" => {
-                        config_struct::create_config(
-                            &path,
-                            Path::new("src/assets/database")
-                                .join(dir.strip_prefix("assets").unwrap())
-                                .join(Path::new(&[file_stem, ".rs"].concat())),
-                            &StructOptions::serde_default(),
-                        )
-                            .expect(&format!(
-                                "Failed to create config from {}",
-                                path.to_str().unwrap()
-                            ));
                         modrs_source = format!(
-                            "{}mod {};\npub use {}::Config as {};\n",
+                            "{}\n{}",
                             modrs_source,
-                            file_stem,
-                            file_stem,
-                            case::pascal_case(file_stem)
-                        );
+                            generate_toml_asset(src_root, path.as_path(), dest_root)?
+                        )
                     }
                     "frag" | "vert" => {
                         let shader_type = match file_extension.as_str() {
                             "frag" => "fragment",
                             "vert" => "vertex",
-                            _ => panic!("Unhandled shader file extension!")
+                            _ => panic!("Unhandled shader file extension!"),
                         };
 
                         modrs_source = format!(
@@ -114,4 +101,48 @@ pub static {}: crate::assets::shader_asset::ShaderAsset = crate::assets::shader_
         fs::write(modrs_path, modrs_source)?;
     }
     Ok(())
+}
+
+fn generate_toml_asset(
+    src_root: &Path,
+    src_path: &Path,
+    dest_root: &Path,
+) -> Result<String, Box<dyn Error>> {
+
+    let file_stem = src_path
+        .file_stem()
+        .expect(format!("Failed to get file stem for asset '{}'", src_path.display()).as_str())
+        .to_str()
+        .expect(
+            format!(
+                "Asset path '{}' contains invalid characters",
+                src_path.display()
+            )
+            .as_str(),
+        );
+
+    let source_dir = src_path.parent().expect(
+        format!(
+            "Failed to get directory path for asset '{}'",
+            src_path.display()
+        )
+        .as_str(),
+    );
+
+    let dest_dir = dest_root.join(source_dir.strip_prefix(src_root).unwrap());
+    let dest_path = dest_dir.join(Path::new(&[file_stem, ".rs"].concat()));
+
+    config_struct::create_config(&src_path, dest_path, &StructOptions::serde_default()).expect(
+        &format!(
+            "Failed to create config from {}",
+            src_path.to_str().unwrap()
+        ),
+    );
+
+    Ok(format!(
+        "mod {};\npub use {}::Config as {};",
+        file_stem,
+        file_stem,
+        case::pascal_case(file_stem)
+    ))
 }
