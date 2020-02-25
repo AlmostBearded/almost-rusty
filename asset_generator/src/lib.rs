@@ -108,7 +108,6 @@ fn generate_toml_asset(
     src_path: &Path,
     dest_root: &Path,
 ) -> Result<String, Box<dyn Error>> {
-
     let file_stem = src_path
         .file_stem()
         .expect(format!("Failed to get file stem for asset '{}'", src_path.display()).as_str())
@@ -121,16 +120,9 @@ fn generate_toml_asset(
             .as_str(),
         );
 
-    let source_dir = src_path.parent().expect(
-        format!(
-            "Failed to get directory path for asset '{}'",
-            src_path.display()
-        )
-        .as_str(),
-    );
-
-    let dest_dir = dest_root.join(source_dir.strip_prefix(src_root).unwrap());
-    let dest_path = dest_dir.join(Path::new(&[file_stem, ".rs"].concat()));
+    let dest_path = dest_root
+        .join(src_path.strip_prefix(src_root).unwrap())
+        .with_extension("rs");
 
     config_struct::create_config(&src_path, dest_path, &StructOptions::serde_default()).expect(
         &format!(
