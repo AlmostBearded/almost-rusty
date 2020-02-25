@@ -13,7 +13,7 @@ pub struct ShaderAsset {
 
 #[derive(Debug)]
 pub struct ShaderAssetMeta {
-    pub shader_type: &'static str
+    pub shader_type: &'static str,
 }
 
 impl ShaderAsset {
@@ -24,7 +24,10 @@ impl ShaderAsset {
         let shader_type = match self.meta.shader_type {
             "fragment" => gl::FRAGMENT_SHADER,
             "vertex" => gl::VERTEX_SHADER,
-            _ => panic!(format!("Invalid shader type '{}' in meta data", self.meta.shader_type))
+            _ => panic!(format!(
+                "Invalid shader type '{}' in meta data",
+                self.meta.shader_type
+            )),
         };
 
         Ok(Shader::from_source(&CString::new(content)?, shader_type)?)

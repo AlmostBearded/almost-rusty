@@ -1,21 +1,20 @@
+use std::ffi::CStr;
+
+use glutin::{
+    ContextBuilder,
+    event::{Event, WindowEvent},
+    event_loop::{ControlFlow, EventLoop},
+    GlProfile, GlRequest, window::WindowBuilder,
+};
+use log::Level;
+
+use assets::database;
+use graphics::gl::shader::Program;
+use utils::log::Logger;
+
 pub mod assets;
 pub mod graphics;
 pub mod utils;
-
-use glutin::{
-    event::{Event, WindowEvent},
-    event_loop::{ControlFlow, EventLoop},
-    window::WindowBuilder,
-    ContextBuilder, GlProfile, GlRequest,
-};
-
-use std::ffi::{CStr, CString};
-
-use graphics::gl::shader::{Program, Shader};
-use assets::database;
-
-use log::Level;
-use utils::log::Logger;
 
 fn main() {
     Logger::init_with_level(Level::Debug);
@@ -54,8 +53,7 @@ fn main() {
         gl::ClearColor(0.3, 0.3, 0.5, 1.0);
     }
 
-    let vertex_shader =
-        Shader::from_vert_source(&CString::new(include_str!("../assets/shaders/triangle.vert")).unwrap()).unwrap();
+    let vertex_shader = assets::database::shaders::TRIANGLE_VERT.load().unwrap();
 
     let fragment_shader = assets::database::shaders::TRIANGLE_FRAG.load().unwrap();
 

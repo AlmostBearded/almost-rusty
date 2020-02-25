@@ -5,7 +5,6 @@ use std::{
     path::{Path, PathBuf},
     vec::Vec,
 };
-
 use voca_rs::*;
 use walkdir::WalkDir;
 
@@ -53,29 +52,55 @@ fn main() -> Result<(), Box<dyn Error>> {
                         path.to_str().unwrap()
                     ))
                     .to_str()
-                    .unwrap();
+                    .unwrap()
+                    .to_lowercase();
 
-                if file_extension.to_lowercase() == "toml" {
-                    // need to provide '/' path strings because of a bug in the config_struct package
-                    config_struct::create_config(
-                        &path,
-                        Path::new("src/assets/database")
-                            .join(dir.strip_prefix("assets").unwrap())
-                            .join(Path::new(&[file_stem, ".rs"].concat())),
-                        &StructOptions::serde_default())
-                        .expect(&format!(
-                            "Failed to create config from {}",
-                            path.to_str().unwrap()
-                        ));
-                    modrs_source = format!(
-                        "{}mod {};\npub use {}::Config as {};\n",
-                        modrs_source,
-                        file_stem,
-                        file_stem,
-                        case::pascal_case(file_stem)
-                    );
-                } else {
-                    modrs_source = format!("{}pub static {} : u8 = 0;\n", modrs_source, file_name);
+                match file_extension.as_str() {
+                    "meta" => continue,
+                    "toml" => {
+                        config_struct::create_config(
+                            &path,
+                            Path::new("src/assets/database")
+                                .join(dir.strip_prefix("assets").unwrap())
+                                .join(Path::new(&[file_stem, ".rs"].concat())),
+                            &StructOptions::serde_default(),
+                        )
+                            .expect(&format!(
+                                "Failed to create config from {}",
+                                path.to_str().unwrap()
+                            ));
+                        modrs_source = format!(
+                            "{}mod {};\npub use {}::Config as {};\n",
+                            modrs_source,
+                            file_stem,
+                            file_stem,
+                            case::pascal_case(file_stem)
+                        );
+                    }
+                    "frag" | "vert" => {
+                        let shader_type = match file_extension.as_str() {
+                            "frag" => "fragment",
+                            "vert" => "vertex",
+                            _ => panic!("Unhandled shader file extension!")
+                        };
+
+                        modrs_source = format!(
+                            "{}
+
+pub static {}: crate::assets::shader_asset::ShaderAsset = crate::assets::shader_asset::ShaderAsset {{
+    path: \"assets/shaders/triangle.{}\",
+    meta: crate::assets::shader_asset::ShaderAssetMeta {{
+        shader_type: \"{}\",
+    }},
+}};",
+                            modrs_source, file_name, file_extension, shader_type
+                        )
+                    }
+                    _ => panic!(format!(
+                        "Unhandled asset file extension {} at file {}",
+                        file_extension,
+                        path.display()
+                    )),
                 }
             }
         }
