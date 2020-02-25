@@ -38,6 +38,20 @@
       <sourceFolder url="file://$MODULE_DIR$/target/debug/build/khronos_api-092fe92359e94aeb/out" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/target/debug/build/glutin_wgl_sys-25c9d94794861ec2/out" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/target/debug/build/gl-e0d7da2f442d115f/out" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/asset_generator/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/asset_generator/examples" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/asset_generator/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/asset_generator/benches" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/target/debug/build/almost-rusty-abec5401b8c94377/out" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/asset_generator/target/debug/build/memchr-fd310c556d70fa23/out" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/asset_generator/target/debug/build/failure_derive-15ca8aa0235cdb1b/out" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/asset_generator/target/debug/build/proc-macro2-6a7d57844e3c13a3/out" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/asset_generator/target/debug/build/syn-a347ce426ae54ad3/out" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/asset_generator/target/debug/build/backtrace-sys-99333134f0dcdd70/out" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/asset_generator/target/debug/build/libc-39942b9d0170cece/out" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/asset_generator/target/debug/build/serde-be693b59f46fd899/out" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/asset_generator/target/debug/build/winapi-49a4340f5097ed8b/out" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/asset_generator/target" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />

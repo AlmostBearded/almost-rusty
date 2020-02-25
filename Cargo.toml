@@ -15,10 +15,5 @@ serde =  { version = "1.0.104", features = ["derive"] }
 toml = "0.5.6"
 
 [build-dependencies]
-walkdir = "2.3.1"
-voca_rs = "1.9.1"
+asset_generator = { path = "asset_generator" }
 
-[build-dependencies.config_struct]
-git = "https://github.com/AlmostBearded/config_struct"
-version = "~0.3.0"
-features = ["toml-parsing"]

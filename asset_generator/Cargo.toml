@@ -1,0 +1,16 @@
+[package]
+name = "asset_generator"
+version = "0.1.0"
+authors = ["Peter Oberrauner <thealmostbearded@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+walkdir = "2.3.1"
+voca_rs = "1.9.1"
+
+[dependencies.config_struct]
+git = "https://github.com/AlmostBearded/config_struct"
+version = "~0.3.0"
+features = ["toml-parsing"]

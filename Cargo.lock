@@ -13,14 +13,12 @@ dependencies = [
 name = "almost-rusty"
 version = "0.1.0"
 dependencies = [
- "config_struct",
+ "asset_generator",
  "gl",
  "glutin",
  "log",
  "serde",
  "toml 0.5.6",
- "voca_rs",
- "walkdir",
  "winit",
 ]
 
@@ -58,6 +56,15 @@ name = "arrayvec"
 version = "0.5.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "cff77d8686867eceff3105329d4698d96c2391c176d5d03adc90c7389162b5b8"
+
+[[package]]
+name = "asset_generator"
+version = "0.1.0"
+dependencies = [
+ "config_struct",
+ "voca_rs",
+ "walkdir",
+]
 
 [[package]]
 name = "autocfg"
