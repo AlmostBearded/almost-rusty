@@ -51,6 +51,7 @@
       <sourceFolder url="file://$MODULE_DIR$/asset_generator/target/debug/build/libc-39942b9d0170cece/out" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/asset_generator/target/debug/build/serde-be693b59f46fd899/out" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/asset_generator/target/debug/build/winapi-49a4340f5097ed8b/out" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/target/debug/build/byteorder-679b2a0b4bbbcce0/out" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/asset_generator/target" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>

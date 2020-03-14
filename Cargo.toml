@@ -13,6 +13,7 @@ gl = "0.14.0"
 log = { version = "0.4", features = ["std"] }
 serde =  { version = "1.0.104", features = ["derive"] } 
 toml = "0.5.6"
+ron = "0.5.1"
 
 [build-dependencies]
 asset_generator = { path = "asset_generator" }

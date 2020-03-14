@@ -17,6 +17,7 @@ dependencies = [
  "gl",
  "glutin",
  "log",
+ "ron",
  "serde",
  "toml 0.5.6",
  "winit",
@@ -92,6 +93,15 @@ checksum = "5d6575f128516de27e3ce99689419835fce9643a9b215a14d2b5b685be018491"
 dependencies = [
  "cc",
  "libc",
+]
+
+[[package]]
+name = "base64"
+version = "0.10.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "0b25d992356d2eb0ed82172f5248873db5560c4721f564b13cb5193bda5e668e"
+dependencies = [
+ "byteorder",
 ]
 
 [[package]]
@@ -719,6 +729,17 @@ name = "regex-syntax"
 version = "0.6.14"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b28dfe3fe9badec5dbf0a79a9cccad2cfc2ab5484bdb3e44cbd1ae8b3ba2be06"
+
+[[package]]
+name = "ron"
+version = "0.5.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2ece421e0c4129b90e4a35b6f625e472e96c552136f5093a2f4fa2bbb75a62d5"
+dependencies = [
+ "base64",
+ "bitflags",
+ "serde",
+]
 
 [[package]]
 name = "rustc-demangle"

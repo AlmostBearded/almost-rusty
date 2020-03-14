@@ -1,14 +1,3 @@
 
-pub static TRIANGLE_FRAG: crate::assets::shader_asset::ShaderAsset = crate::assets::shader_asset::ShaderAsset {
-    path: "assets/shaders/triangle.frag",
-    meta: crate::assets::shader_asset::ShaderAssetMeta {
-        shader_type: "fragment",
-    },
-};
-
-pub static TRIANGLE_VERT: crate::assets::shader_asset::ShaderAsset = crate::assets::shader_asset::ShaderAsset {
-    path: "assets/shaders/triangle.vert",
-    meta: crate::assets::shader_asset::ShaderAssetMeta {
-        shader_type: "vertex",
-    },
-};
+pub static TRIANGLE_FRAG: &'static str = "assets/shaders/triangle.frag.meta";
+pub static TRIANGLE_VERT: &'static str = "assets/shaders/triangle.vert.meta";

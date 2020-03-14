@@ -54,15 +54,16 @@ pub fn generate_database(src_root: &Path, dest_root: &Path) -> Result<(), Box<dy
                     .unwrap()
                     .to_lowercase();
 
+                let file_name = path.file_name().unwrap().to_str().unwrap();
+                let var_name = file_name.to_uppercase().replace(".", "_");
+
                 let code = match file_extension.as_str() {
-                    "meta" => "".to_string(),
-                    "toml" => generate_toml_asset(src_root, path.as_path(), dest_root)?,
-                    "frag" | "vert" => generate_shader_asset(path.as_path())?,
-                    _ => panic!(format!(
-                        "Unhandled asset file extension {} at file {}",
-                        file_extension,
-                        path.display()
-                    )),
+                    "meta" => format!(
+                        "pub static {}: &'static str = \"{}\";",
+                        var_name.replace("_META", ""),
+                        path.to_str().unwrap().replace("\\", "/")
+                    ),
+                    _ => continue,
                 };
 
                 modrs_code = format!("{}\n{}", modrs_code, code)
