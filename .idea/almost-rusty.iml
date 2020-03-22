@@ -52,6 +52,33 @@
       <sourceFolder url="file://$MODULE_DIR$/asset_generator/target/debug/build/serde-be693b59f46fd899/out" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/asset_generator/target/debug/build/winapi-49a4340f5097ed8b/out" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/target/debug/build/byteorder-679b2a0b4bbbcce0/out" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/target/debug/build/almost-rusty-2230dc0f96ea54b2/out" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/target/debug/build/serde-1e3b2340fa88296b/out" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/target/debug/build/proc-macro2-9d1a081e5981ca02/out" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/target/debug/build/syn-745612d5d492c3b0/out" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/target/debug/build/memchr-c8dac6069b44d939/out" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/target/debug/build/failure_derive-dedf2ac73a8e74e3/out" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/target/debug/build/backtrace-sys-a431b4f647edf62f/out" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/target/debug/build/libc-631c2de0157c3898/out" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/target/debug/build/winapi-18666d0cf53b93a6/out" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/target/debug/build/winapi-x86_64-pc-windows-gnu-08da15b6524618f0/out" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/target/debug/build/log-9e207e412d0b2f45/out" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/target/debug/build/byteorder-b2428edfbd0a4dec/out" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/target/debug/build/bitflags-e4c367c8f0d36eb9/out" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/target/debug/build/libloading-b2e12d66fc8c3d1d/out" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/target/debug/build/glutin_egl_sys-1d6fdfc0973dc029/out" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/target/debug/build/khronos_api-5ae2ed766ff3e48c/out" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/target/debug/build/glutin_wgl_sys-160e2ba1dc2630d5/out" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/target/debug/build/gl-d54e5a0a2566b169/out" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/asset_generator/target/debug/build/memchr-fb073ccc3ddd9ba1/out" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/asset_generator/target/debug/build/failure_derive-dedf2ac73a8e74e3/out" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/asset_generator/target/debug/build/proc-macro2-a5f8a3ffd078207b/out" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/asset_generator/target/debug/build/syn-07f95ab0da081e75/out" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/asset_generator/target/debug/build/backtrace-sys-a431b4f647edf62f/out" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/asset_generator/target/debug/build/libc-7da192ac7dab2360/out" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/asset_generator/target/debug/build/serde-df247a7d16e3d982/out" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/asset_generator/target/debug/build/winapi-698f846e3bb9c015/out" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/asset_generator/target/debug/build/winapi-x86_64-pc-windows-gnu-08da15b6524618f0/out" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/asset_generator/target" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>

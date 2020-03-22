@@ -3,23 +3,23 @@ use crate::utils;
 use gl::types::*;
 use std::ptr;
 
-use super::Shader;
 use log;
+use crate::graphics::gl::shader::shader::Shader;
 
 #[derive(Debug)]
-pub struct Program {
+pub struct ShaderProgram {
     id: GLuint,
 }
 
-impl Program {
-    pub fn from_shaders(shaders: &[Shader]) -> Result<Program, String> {
+impl ShaderProgram {
+    pub fn from_shaders(shaders: &[Shader]) -> Result<ShaderProgram, String> {
         log::debug!("Creating shader program from shaders {:?}", shaders);
 
         let id = unsafe { gl::CreateProgram() };
 
         for shader in shaders {
             unsafe {
-                gl::AttachShader(id, shader.id());
+                gl::AttachShader(id, shader.id);
             }
         }
 
@@ -27,7 +27,7 @@ impl Program {
             gl::LinkProgram(id);
         }
 
-        match Program::check_errors(id) {
+        match ShaderProgram::check_errors(id) {
             Ok(_) => {
                 log::info!("Shader program {} linked sucessfully", id);
             }
@@ -40,11 +40,11 @@ impl Program {
         // detach shaders so they can be destroyed
         for shader in shaders {
             unsafe {
-                gl::DetachShader(id, shader.id());
+                gl::DetachShader(id, shader.id);
             }
         }
 
-        Ok(Program { id: id })
+        Ok(ShaderProgram { id })
     }
 
     fn check_errors(id: GLuint) -> Result<(), String> {
@@ -83,7 +83,7 @@ impl Program {
     }
 }
 
-impl Drop for Program {
+impl Drop for ShaderProgram {
     fn drop(&mut self) {
         log::debug!("Deleting shader program {}", self.id);
         unsafe {

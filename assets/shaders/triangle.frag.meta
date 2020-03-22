@@ -1,1 +1,5 @@
-shader_type = "fragment"
+(
+    id: "frag-tria",
+    shader_type: FRAGMENT,
+    source_path: "./triangle.frag"
+)

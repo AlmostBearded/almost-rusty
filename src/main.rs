@@ -9,10 +9,12 @@ use glutin::{
 };
 use log::Level;
 
-use assets::ShaderAssetManager;
-use assets::{Asset, Store};
-use graphics::gl::shader::Program;
 use utils::log::Logger;
+
+use crate::assets::shader_meta::load_shader_metas_from_paths;
+use crate::assets::shader_program_meta::load_shader_program_metas_from_paths;
+use crate::assets::window_config::load_window_config_from_path;
+use crate::graphics::gl::shader::shader::load_shaders_from_metas;
 
 pub mod assets;
 pub mod graphics;
@@ -22,15 +24,22 @@ fn main() {
     Logger::init_with_level(Level::Debug);
     log::info!("Game started");
 
-    let shaderAssetManager = ShaderAssetManager {
-        meta_paths: vec!["assets/shaders/triangle.frag.meta", "assets/shaders/triangle.vert.meta"]
-    }
+    let shader_meta_paths = vec![
+        Path::new("assets/shaders/triangle.frag.meta"),
+        Path::new("assets/shaders/triangle.vert.meta"),
+    ];
 
-    // let window_config = database::config::Window::load();
+    let shader_metas = load_shader_metas_from_paths(&shader_meta_paths);
+    println!("{:?}", shader_metas);
+
+    let shader_program_meta_paths = vec![Path::new("assets/shaders/triangle.shader.meta")];
+    let shader_program_metas = load_shader_program_metas_from_paths(&shader_program_meta_paths);
+    println!("{:?}", shader_program_metas);
+
+    let window_config = load_window_config_from_path(Path::new("assets/window.ron"));
 
     let el = EventLoop::new();
-    // let wb = WindowBuilder::new().with_title(window_config.into_owned().title);
-    let wb = WindowBuilder::new().with_title("TITLE");
+    let wb = WindowBuilder::new().with_title(window_config.title);
 
     let windowed_context = ContextBuilder::new()
         .with_gl(GlRequest::Latest)
@@ -60,10 +69,8 @@ fn main() {
         gl::ClearColor(0.3, 0.3, 0.5, 1.0);
     }
 
-    // let vertex_shader = assets::database::shaders::TRIANGLE_VERT.load().unwrap();
-    //
-    // let fragment_shader = assets::database::shaders::TRIANGLE_FRAG.load().unwrap();
-    //
+    let shaders = load_shaders_from_metas(&shader_metas);
+
     // let program = Program::from_shaders(&[vertex_shader, fragment_shader]).unwrap();
     // program.activate();
 
