@@ -2,10 +2,10 @@ use std::ffi::CStr;
 use std::path::Path;
 
 use glutin::{
+    ContextBuilder,
     event::{Event, WindowEvent},
     event_loop::{ControlFlow, EventLoop},
-    window::WindowBuilder,
-    ContextBuilder, GlProfile, GlRequest,
+    GlProfile, GlRequest, window::WindowBuilder,
 };
 use log::Level;
 
@@ -13,7 +13,7 @@ use utils::log::Logger;
 
 use crate::assets::shader_asset::load_shader_assets;
 use crate::assets::shader_program_asset::load_shader_program_assets;
-use crate::assets::window_config::load_window_config_from_path;
+use crate::assets::window_config::load_window_config;
 use crate::graphics::gl::shader::shader::compile_shaders;
 use crate::graphics::gl::shader::shader_program::link_shader_programs;
 
@@ -46,7 +46,8 @@ fn main() {
     );
     log::debug!("Shader program assets: {:?}", shader_program_assets);
 
-    let window_config = load_window_config_from_path(Path::new("assets/window.ron"));
+    let window_config = load_window_config(Path::new("assets/window.ron"));
+    log::debug!("Window config: {:?}", window_config);
 
     let el = EventLoop::new();
     let wb = WindowBuilder::new().with_title(window_config.title);

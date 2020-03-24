@@ -7,7 +7,7 @@ pub struct WindowConfig {
     pub title: String,
 }
 
-pub fn load_window_config_from_path(path: &Path) -> WindowConfig {
+pub fn load_window_config(path: &Path) -> WindowConfig {
     let contents =
         read_to_string(path).expect(&format!("Failed to read file '{}'", path.display()));
     let window_config: WindowConfig = from_str(&contents).expect(&format!(
