@@ -11,10 +11,11 @@ use log::Level;
 
 use utils::log::Logger;
 
-use crate::assets::shader_meta::load_shader_metas_from_paths;
-use crate::assets::shader_program_meta::load_shader_program_metas_from_paths;
+use crate::assets::shader_asset::load_shader_assets;
+use crate::assets::shader_program_asset::load_shader_program_assets;
 use crate::assets::window_config::load_window_config_from_path;
-use crate::graphics::gl::shader::shader::load_shaders_from_metas;
+use crate::graphics::gl::shader::shader::compile_shaders;
+use crate::graphics::gl::shader::shader_program::link_shader_programs;
 
 pub mod assets;
 pub mod graphics;
@@ -28,13 +29,22 @@ fn main() {
         Path::new("assets/shaders/triangle.frag.meta"),
         Path::new("assets/shaders/triangle.vert.meta"),
     ];
+    log::debug!("Shader meta paths: {:?}", shader_meta_paths);
 
-    let shader_metas = load_shader_metas_from_paths(&shader_meta_paths);
-    println!("{:?}", shader_metas);
+    let (shader_id_lookup_map, shader_assets) = load_shader_assets(&shader_meta_paths);
+    log::debug!("Shader id lookup map: {:?}", shader_id_lookup_map);
+    log::debug!("Shader assets: {:?}", shader_assets);
 
     let shader_program_meta_paths = vec![Path::new("assets/shaders/triangle.shader.meta")];
-    let shader_program_metas = load_shader_program_metas_from_paths(&shader_program_meta_paths);
-    println!("{:?}", shader_program_metas);
+    log::debug!("Shader program meta paths: {:?}", shader_program_meta_paths);
+
+    let (shader_program_id_lookup_map, shader_program_assets) =
+        load_shader_program_assets(&shader_program_meta_paths);
+    log::debug!(
+        "Shader program id lookup map: {:?}",
+        shader_program_id_lookup_map
+    );
+    log::debug!("Shader program assets: {:?}", shader_program_assets);
 
     let window_config = load_window_config_from_path(Path::new("assets/window.ron"));
 
@@ -69,9 +79,13 @@ fn main() {
         gl::ClearColor(0.3, 0.3, 0.5, 1.0);
     }
 
-    let shaders = load_shaders_from_metas(&shader_metas);
+    let shaders = compile_shaders(&shader_assets);
+    log::debug!("Compiled shaders: {:?}", shaders);
 
-    // let program = Program::from_shaders(&[vertex_shader, fragment_shader]).unwrap();
+    let shader_programs =
+        link_shader_programs(&shader_program_assets, &shader_id_lookup_map, &shaders);
+    log::debug!("Linked shader programs: {:?}", shader_programs);
+
     // program.activate();
 
     el.run(move |event, _, control_flow| {

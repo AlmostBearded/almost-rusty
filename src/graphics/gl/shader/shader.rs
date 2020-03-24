@@ -1,12 +1,12 @@
 use std::ffi::CString;
 use std::fs::read_to_string;
-use std::{ffi::CStr, ptr};
 
 use gl::types::*;
 use log;
 
-use crate::assets::shader_meta::ShaderMeta;
+use crate::assets::shader_asset::ShaderAsset;
 use crate::utils::string as string_utils;
+use core::ptr;
 
 #[derive(Debug)]
 pub struct Shader {
@@ -22,10 +22,10 @@ impl Drop for Shader {
     }
 }
 
-pub fn load_shaders_from_metas(metas: &Vec<ShaderMeta>) -> Vec<Shader> {
+pub fn compile_shaders(metas: &Vec<ShaderAsset>) -> Vec<Shader> {
     let mut shaders = Vec::<Shader>::new();
-    for meta in metas {
-        log::debug!("Creating shader of type {:?}.", meta.shader_type);
+    for (i, meta) in metas.iter().enumerate() {
+        log::debug!("Compiling shader {} of {}", i + 1, metas.len());
         let source = read_to_string(&meta.source_path).expect(&format!(
             "Failed to read shader source from file '{}'",
             meta.source_path.display()
@@ -45,11 +45,8 @@ pub fn load_shaders_from_metas(metas: &Vec<ShaderMeta>) -> Vec<Shader> {
             id,
             meta.source_path.display()
         ));
-        log::info!("Shader {} compiled successfully.", id);
 
-        let shader = Shader { id };
-
-        shaders.push(shader);
+        shaders.push(Shader { id });
     }
     shaders
 }

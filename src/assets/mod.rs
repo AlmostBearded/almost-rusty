@@ -1,3 +1,3 @@
-pub mod shader_meta;
-pub mod shader_program_meta;
+pub mod shader_asset;
+pub mod shader_program_asset;
 pub mod window_config;
