@@ -1,5 +1,0 @@
-(
-    id: "shad-tria",
-    vertex_shader_id: "vert-tria",
-    fragment_shader_id: "frag-tria"
-)

@@ -1,5 +1,0 @@
-(
-    id: "vert-tria",
-    shader_type: VERTEX,
-    source_path: "./triangle.vert"
-)

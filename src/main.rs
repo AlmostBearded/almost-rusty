@@ -12,10 +12,8 @@ use log::Level;
 use utils::log::Logger;
 
 use crate::assets::shader_asset::load_shader_assets;
-use crate::assets::shader_program_asset::load_shader_program_assets;
 use crate::assets::window_config::load_window_config;
 use crate::graphics::gl::shader::shader::compile_shaders;
-use crate::graphics::gl::shader::shader_program::link_shader_programs;
 
 pub mod assets;
 pub mod graphics;
@@ -25,26 +23,12 @@ fn main() {
     Logger::init_with_level(Level::Debug);
     log::info!("Game started");
 
-    let shader_meta_paths = vec![
-        Path::new("assets/shaders/triangle.frag.meta"),
-        Path::new("assets/shaders/triangle.vert.meta"),
-    ];
-    log::debug!("Shader meta paths: {:?}", shader_meta_paths);
+    let shader_paths = vec![Path::new("assets/shaders/triangle.shader")];
+    log::debug!("Shader paths: {:?}", shader_paths);
 
-    let (shader_id_lookup_map, shader_assets) = load_shader_assets(&shader_meta_paths);
+    let (shader_id_lookup_map, shader_assets) = load_shader_assets(&shader_paths);
     log::debug!("Shader id lookup map: {:?}", shader_id_lookup_map);
     log::debug!("Shader assets: {:?}", shader_assets);
-
-    let shader_program_meta_paths = vec![Path::new("assets/shaders/triangle.shader.meta")];
-    log::debug!("Shader program meta paths: {:?}", shader_program_meta_paths);
-
-    let (shader_program_id_lookup_map, shader_program_assets) =
-        load_shader_program_assets(&shader_program_meta_paths);
-    log::debug!(
-        "Shader program id lookup map: {:?}",
-        shader_program_id_lookup_map
-    );
-    log::debug!("Shader program assets: {:?}", shader_program_assets);
 
     let window_config = load_window_config(Path::new("assets/window.ron"));
     log::debug!("Window config: {:?}", window_config);
@@ -83,12 +67,6 @@ fn main() {
     let shaders = compile_shaders(&shader_assets);
     log::debug!("Compiled shaders: {:?}", shaders);
 
-    let shader_programs =
-        link_shader_programs(&shader_program_assets, &shader_id_lookup_map, &shaders);
-    log::debug!("Linked shader programs: {:?}", shader_programs);
-
-    // program.activate();
-
     el.run(move |event, _, control_flow| {
         log::trace!("{:?}", event);
         *control_flow = ControlFlow::Wait;
@@ -101,6 +79,29 @@ fn main() {
                 _ => (),
             },
             Event::RedrawRequested(_) => {
+                // Reload modified shaders:
+                // # Watch for changes to meta and source files
+                // # Figure out which meta files to reload
+                //   Associate files with asset ids
+                // # Load modified shader assets
+                // # Compile modified shaders
+                // # Merge reloaded shaders into existing ones ("commit reload?")
+                //   Replace reloaded shaders in the vector
+                // # Figure out which shader programs need to relink
+                //   Associate shader ids with shader program ids
+                // # Link modified shader programs
+                // # Merge reloaded shader programs into existing ones ("commit reload?")
+                //   Replace reloaded shader programs in the vector
+
+                // Reload modified shader programs:
+                // # Watch for changes to shader program meta files
+                // # Load modified shader program assets
+                // # Link modified shader programs
+                // # Merge reloaded shader programs into existing ones ("commit reload?")
+
+                // Reload modified sprite(?):
+                // ?
+
                 unsafe {
                     gl::Clear(gl::COLOR_BUFFER_BIT);
                 }
