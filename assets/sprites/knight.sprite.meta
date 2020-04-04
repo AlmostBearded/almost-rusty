@@ -1,0 +1,4 @@
+(
+    id: "spri-knight",
+    data_path: "./knight.png"
+)
